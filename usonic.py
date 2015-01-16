@@ -47,11 +47,11 @@ while True:
 	
 	while GPIO.input(22) == 1:
 
-		if reading(0) > 100:
-		
+		if lastReading == True && reading(0) > 100:
+			
 			if monON == True:
 
-				print "Turning Monitor OFF"
+				#print "Turning Monitor OFF"
 				monON = False
 				os.system("sudo /usr/local/bin/monitor.sh off")
 		
@@ -59,10 +59,19 @@ while True:
 		
 			if monON == False:
 
-				print "Turning Monitor ON"
+				#print "Turning Monitor ON"
 				monON = True
 				os.system("sudo /usr/local/bin/monitor.sh on")
+				time.sleep(20)
 
-		time.sleep(2)
+		if reading(0) > 100:
+
+			lastReading = True
+		
+		else:
+
+			lastReading = False
+
+		time.sleep(1)
 
 time.sleep(30)
